@@ -9,15 +9,17 @@ const taskSchema = z.object({
   status: z.nativeEnum(TaskStatus).optional(),
 });
 
+
 export const createTask = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const validatedData = taskSchema.parse(req.body);
-    const task = await taskService.createTask(validatedData);
-    res.status(201).json(task);
-  } catch (error) {
-    res.status(400).json({ error: (error as Error).message });
-  }
-};
+    try {
+      const validatedData = taskSchema.parse(req.body); // matches TaskInput
+      const task = await taskService.createTask(validatedData);
+      res.status(201).json(task);
+    } catch (error) {
+      res.status(400).json({ error: (error as Error).message });
+    }
+  };
+  
 
 export const getTasks = async (req: Request, res: Response): Promise<void> => {
   try {
